@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> Vaishali ShopWave - E-Commerce Platform with Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!--
+   VAISHALI's ShopWave: E-Commerce Platform with Admin Dashboard  (colourful student-project design)
+  Single file: HTML + CSS + JavaScript.  Save as index.html and double-click to open.
+
+  PHOTOS: product photos load from the internet (see the PHOTOS list in the script).
+  If a photo can't load, a drawn picture is shown instead, so the page never looks broken.
+  To use your own photos: put them in an "images" folder next to this file and change
+  the links in the PHOTOS list, for example  "images/earbuds.jpg".
+  By VAISHALI E
+-->
+<style>
+/* ---------- Colours ---------- */
+:root{
+  --blue:#2f5bea; --blue-soft:#dbe6ff;
+  --orange:#ff8a3d; --orange-soft:#ffe6d1;
+  --green:#22b07d; --green-soft:#d3f5e6;
+  --pink:#ec4899; --pink-soft:#ffdcec;
+  --yellow:#fbbf24; --yellow-soft:#fff2c4;
+  --ink:#1b2559; --muted:#5f6b8a; --bg:#f3f6ff; --white:#ffffff; --line:#e1e7fb;
+  --red:#e11d48;
+  --font:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5}
+
+/* ---------- Header ---------- */
+.header{background:var(--blue);color:#fff}
+.header .in{max-width:1180px;margin:0 auto;padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:space-between}
+.brand{font-size:24px;font-weight:700}
+.brand small{display:block;font-size:12px;font-weight:400;opacity:.85}
+.tabs{display:flex;gap:8px}
+.tabs button{background:#fff;color:var(--blue);border:0;padding:9px 18px;border-radius:99px;font:inherit;font-weight:600;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--yellow);color:var(--ink)}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 40px}
+
+/* ---------- Buttons and inputs ---------- */
+button,select,input{font:inherit;font-size:14px}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:600;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.orange{background:var(--orange)}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn.sm{padding:2px 10px}
+.btn.danger{background:var(--red)}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+input,select{background:#fff;color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:8px 12px;max-width:100%;min-width:0}
+input:focus,select:focus{border-color:var(--blue);outline:none}
+
+/* ---------- Hero ---------- */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:0;border-radius:20px;overflow:hidden;background:var(--orange);color:var(--ink);margin-bottom:18px}
+.hero .txt{padding:26px 28px}
+.hero h2{margin:0 0 6px;font-size:28px;line-height:1.2}
+.hero p{margin:0 0 14px;max-width:420px}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;color:var(--ink);padding:4px 12px;border-radius:99px;font-weight:600;font-size:12px}
+.hero .pic{min-height:190px;background:var(--yellow) center/cover no-repeat}
+
+/* ---------- Store ---------- */
+.shop{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.toolbar input{flex:1;min-width:160px}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.pcard{background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(27,37,89,.08)}
+.imgbox{position:relative;aspect-ratio:4/3;background:var(--blue-soft)}
+.imgbox img,.imgbox svg{display:block;width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;left:10px;top:10px;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:700;color:var(--ink)}
+.b-Electronics{background:var(--blue-soft)}.b-Fashion{background:var(--pink-soft)}.b-Home{background:var(--orange-soft)}.b-Books{background:var(--green-soft)}
+.pbody{padding:12px 14px 14px;display:flex;flex-direction:column;gap:2px;flex:1}
+.pname{font-weight:600}
+.price{font-size:20px;font-weight:700;color:var(--blue);margin:4px 0 8px}
+.stk{font-size:12px;color:var(--green);font-weight:600}.stk.low{color:var(--orange)}.stk.out{color:var(--red)}
+.pbody .btn{margin-top:auto}
+.panel{background:#fff;border-radius:16px;padding:18px;min-width:0;box-shadow:0 2px 10px rgba(27,37,89,.08)}
+.panel h2{font-size:16px;margin:0 0 2px}
+.note{font-size:12px;color:var(--muted);margin:0 0 10px}
+.cart{position:sticky;top:12px;border-top:6px solid var(--pink)}
+.line{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.line small{color:var(--muted)}
+.form{display:grid;gap:8px;margin-top:12px}
+.msg{font-size:13px;padding:9px 12px;border-radius:10px;margin-top:8px;font-weight:500}
+.msg.err{background:var(--pink-soft);color:#9f1239}
+.msg.ok{background:var(--green-soft);color:#065f46}
+
+/* ---------- Admin ---------- */
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.kpi{border-radius:16px;padding:16px}
+.kpi .l{font-size:12px;font-weight:600;opacity:.75}
+.kpi .v{font-size:24px;font-weight:700;margin-top:2px}
+.k1{background:var(--blue-soft)}.k2{background:var(--orange-soft)}.k3{background:var(--green-soft)}.k4{background:var(--pink-soft)}.k5{background:var(--yellow-soft)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}
+.s8{grid-column:span 8}.s4{grid-column:span 4}.s12{grid-column:span 12}
+.chart svg{display:block;width:100%;height:auto}
+.gl{stroke:var(--line);stroke-width:1}
+.tx{fill:var(--muted);font-size:11px;font-family:var(--font)}
+.ar{fill:var(--blue);opacity:.14}
+.ln{fill:none;stroke:var(--blue);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.dot{fill:var(--blue)}
+.br{fill:var(--orange)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:12px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px}
+.tablewrap{overflow:auto;border-radius:12px;border:2px solid var(--line);max-height:340px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{position:sticky;top:0;background:var(--blue);color:#fff;font-size:12px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 12px;border-radius:99px;background:var(--orange-soft);color:#9a3412;margin:0 6px 6px 0}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.row input{flex:1;min-width:120px}
+footer{margin-top:22px;font-size:12px;color:var(--muted);text-align:center}
+
+@media (max-width:900px){
+  .shop{grid-template-columns:minmax(0,1fr)}
+  .cart{position:static}
+  .hero{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .s8,.s4{grid-column:span 12}
+}
+</style>
+</head>
+<body>
+
+<div class="header"><div class="in">
+  <div class="brand">ShopWave<small>E-commerce platform with admin dashboard &middot; by Vaishali E</small></div>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tabShop" aria-selected="true">Store</button>
+    <button role="tab" id="tabAdmin" aria-selected="false">Admin dashboard</button>
+  </div>
+</div></div>
+
+<div class="wrap">
+
+  <!-- ================= STORE ================= -->
+  <section id="shopView">
+    <div class="hero">
+      <div class="txt">
+        <h2>Shop smart, save more!</h2>
+        <p>Gadgets, fashion, home and books in one place. Free delivery on orders of &#8377;999 or more.</p>
+        <div class="chips"><span class="chip">Free shipping</span><span class="chip">Easy checkout</span><span class="chip">Live stock</span></div>
+      </div>
+      <div class="pic" id="heroPic"></div>
+    </div>
+
+    <div class="shop">
+      <div>
+        <div class="toolbar">
+          <input id="search" placeholder="Search products..." aria-label="Search products">
+          <select id="category" aria-label="Category"><option>All</option><option>Electronics</option><option>Fashion</option><option>Home</option><option>Books</option></select>
+          <select id="sort" aria-label="Sort"><option value="">Featured</option><option value="asc">Price: low to high</option><option value="desc">Price: high to low</option></select>
+        </div>
+        <div class="products" id="products"></div>
+      </div>
+
+      <aside class="panel cart" aria-label="Cart">
+        <h2>Your cart</h2>
+        <p class="note">Free shipping on orders of &#8377;999 or more</p>
+        <div id="cartLines"></div>
+        <div id="totals"></div>
+        <form class="form" id="checkout">
+          <input id="cname" placeholder="Full name" aria-label="Full name">
+          <input id="cemail" placeholder="Email" aria-label="Email">
+          <input id="caddr" placeholder="Delivery address" aria-label="Delivery address">
+          <button class="btn orange" type="submit" id="placeBtn">Place order</button>
+        </form>
+        <div id="msg" role="status"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= ADMIN ================= -->
+  <section id="adminView" hidden>
+    <div class="kpis" id="kpis"></div>
+    <div class="grid">
+      <div class="panel s8"><h2>Revenue</h2><p class="note">Last 14 days (cancelled orders not counted)</p><div class="chart" id="revChart"></div></div>
+      <div class="panel s4"><h2>Sales by category</h2><p class="note">Share of revenue</p><div class="chart" id="catChart"></div></div>
+      <div class="panel s4"><h2>Top products</h2><p class="note">Units sold</p><div class="chart" id="topChart"></div></div>
+      <div class="panel s8"><h2>Low stock alerts</h2><p class="note">Products with 5 or fewer items left</p><div id="low"></div></div>
+
+      <div class="panel s12">
+        <h2>Orders</h2>
+        <p class="note">Change a status to update the dashboard. Cancelling an order gives the stock back.</p>
+        <div class="tablewrap"><table><thead><tr><th>#</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody id="orders"></tbody></table></div>
+      </div>
+
+      <div class="panel s12">
+        <h2>Inventory</h2>
+        <p class="note">Add a product (photo link is optional), edit stock or delete items. The store updates at once.</p>
+        <form class="row" id="addForm">
+          <input id="pn" placeholder="Product name" aria-label="Product name">
+          <input id="pc" placeholder="Category (Electronics, Fashion, Home, Books)" aria-label="Category">
+          <input id="pp" type="number" min="1" placeholder="Price" aria-label="Price">
+          <input id="ps" type="number" min="0" placeholder="Stock" aria-label="Stock">
+          <input id="pi" placeholder="Photo link (optional)" aria-label="Photo link">
+          <button class="btn" type="submit">Add product</button>
+        </form>
+        <div id="pmsg" role="status"></div>
+        <div class="tablewrap"><table><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead><tbody id="inv"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>All products, customers and orders are sample data. Nothing is saved on a server. Refresh the page to reset.</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Helpers ---------- */
+  var $ = function (id) { return document.getElementById(id); };
+  var money = function (n) { return "₹" + Number(n).toLocaleString("en-IN"); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  };
+  function rng(s) {
+    return function () {
+      s |= 0; s = (s + 0x6d2b79f5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ---------- PHOTOS: change these links to use your own pictures ---------- */
+  // Each link asks a free photo site for a picture that matches the keywords.
+  // To use your own file, replace the link with e.g. "images/earbuds.jpg".
+  function stock(keywords, n) { return "https://loremflickr.com/480/360/" + keywords + "?lock=" + n; }
+  var PHOTOS = {
+    earbuds:   stock("earphones,headphones", 11),
+    watch:     stock("smartwatch,watch", 12),
+    speaker:   stock("bluetooth,speaker", 13),
+    powerbank: stock("powerbank,charger", 14),
+    tshirt:    stock("tshirt", 15),
+    jacket:    stock("denim,jacket", 16),
+    shoe:      stock("sneakers,shoes", 17),
+    backpack:  stock("backpack", 18),
+    mug:       stock("mug,coffee", 19),
+    lamp:      stock("desk,lamp", 20),
+    bedsheet:  stock("bedsheet,bedroom", 21),
+    book:      stock("book,programming", 22),
+    book2:     stock("books,study", 23)
+  };
+  $("heroPic").style.backgroundImage = 'url("' + stock("shopping,store", 7) + '")';
+
+  /* ---------- Fallback pictures (used if a photo can't load) ---------- */
+  var CATCOL = { Electronics: "#2f5bea", Fashion: "#ec4899", Home: "#ff8a3d", Books: "#22b07d" };
+  var DARK = 'fill="rgba(0,0,0,.3)" stroke="none"';
+  var ART = {
+    earbuds: '<rect x="36" y="22" width="48" height="36" rx="16"/><circle cx="26" cy="64" r="9"/><circle cx="94" cy="64" r="9"/><circle cx="60" cy="49" r="4" ' + DARK + '/>',
+    watch: '<rect x="48" y="4" width="24" height="82" rx="9" opacity=".55"/><circle cx="60" cy="45" r="23"/><path d="M60 45V32M60 45l9 6" fill="none" stroke="rgba(0,0,0,.55)" stroke-width="3.5" stroke-linecap="round"/>',
+    speaker: '<rect x="32" y="12" width="56" height="66" rx="16"/><circle cx="60" cy="31" r="7" ' + DARK + '/><circle cx="60" cy="56" r="13" ' + DARK + '/>',
+    powerbank: '<rect x="36" y="10" width="48" height="70" rx="9"/><rect x="46" y="22" width="28" height="6" rx="3" ' + DARK + '/><rect x="46" y="34" width="28" height="6" rx="3" ' + DARK + '/><rect x="46" y="46" width="18" height="6" rx="3" ' + DARK + '/>',
+    tshirt: '<path d="M40 14L18 28l9 15 13-7v42h40V36l13 7 9-15L80 14Q60 30 40 14z"/>',
+    jacket: '<path d="M40 12L16 28l8 18 12-6v40h48V40l12 6 8-18L80 12Q60 26 40 12z"/><rect x="40" y="56" width="14" height="12" rx="2" ' + DARK + '/><rect x="66" y="56" width="14" height="12" rx="2" ' + DARK + '/>',
+    shoe: '<path d="M14 62V38q18-2 30-12l9 11q20 4 40 14 13 6 13 17v4H14z"/><rect x="14" y="68" width="92" height="9" rx="4.5" ' + DARK + '/>',
+    backpack: '<path d="M48 18q12-16 24 0" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/><rect x="32" y="16" width="56" height="66" rx="20"/><rect x="42" y="48" width="36" height="24" rx="8" ' + DARK + '/>',
+    mug: '<rect x="28" y="30" width="50" height="48" rx="9"/><path d="M78 42h7a11 11 0 0 1 0 24h-7" fill="none" stroke="#fff" stroke-width="6"/><path d="M44 24q-5-6 0-12M60 24q-5-6 0-12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>',
+    lamp: '<rect x="36" y="74" width="44" height="7" rx="3.5"/><path d="M58 74V46l24-22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M72 14l28 16-9 12-28-16z"/>',
+    bedsheet: '<rect x="14" y="32" width="92" height="44" rx="7"/><rect x="22" y="18" width="40" height="20" rx="9"/><path d="M14 52h92M14 64h92" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2.5"/>',
+    book: '<rect x="34" y="8" width="54" height="74" rx="5"/><rect x="34" y="8" width="10" height="74" rx="5" ' + DARK + '/><path d="M54 28h26M54 40h26M54 52h16" fill="none" stroke="rgba(0,0,0,.4)" stroke-width="3" stroke-linecap="round"/>',
+    box: '<rect x="26" y="34" width="68" height="46" rx="5"/><rect x="20" y="22" width="80" height="16" rx="4"/><path d="M60 22v58" fill="none" stroke="rgba(0,0,0,.3)" stroke-width="6"/>'
+  };
+  function art(p) {
+    var kind = ART[p.kind] ? p.kind : (p.kind === "book2" ? "book" : "box");
+    return '<svg viewBox="0 0 120 90" role="img" aria-label="' + esc(p.name) + '"><rect width="120" height="90" fill="' + (CATCOL[p.category] || "#8b5cf6") + '"/>' +
+      '<g fill="rgba(255,255,255,.95)" stroke="rgba(0,0,0,.2)" stroke-width="1.5" stroke-linejoin="round">' + ART[kind] + "</g></svg>";
+  }
+  function picture(p) {
+    var src = p.photo || PHOTOS[p.kind];
+    if (!src) return art(p);
+    return '<img src="' + esc(src) + '" alt="' + esc(p.name) + '" loading="lazy" data-pid="' + p.id + '">';
+  }
+  // If a photo fails to load, swap in the drawn picture
+  document.addEventListener("error", function (e) {
+    var t = e.target;
+    if (t && t.tagName === "IMG" && t.dataset.pid) {
+      var p = find(+t.dataset.pid);
+      if (p) t.outerHTML = art(p);
+    }
+  }, true);
+
+  /* ---------- Data ---------- */
+  var SEED = [
+    ["Wireless Earbuds", "Electronics", 2499, 40, "earbuds"], ["Smart Watch", "Electronics", 5999, 25, "watch"],
+    ["Bluetooth Speaker", "Electronics", 1799, 3, "speaker"], ["Power Bank 20000mAh", "Electronics", 1599, 60, "powerbank"],
+    ["Cotton T-Shirt", "Fashion", 599, 120, "tshirt"], ["Denim Jacket", "Fashion", 2199, 18, "jacket"],
+    ["Running Shoes", "Fashion", 3299, 4, "shoe"], ["Backpack", "Fashion", 1299, 45, "backpack"],
+    ["Ceramic Mug Set", "Home", 799, 70, "mug"], ["LED Desk Lamp", "Home", 1099, 33, "lamp"],
+    ["Cotton Bedsheet", "Home", 1499, 22, "bedsheet"], ["Clean Code (Book)", "Books", 899, 50, "book"],
+    ["JavaScript Handbook", "Books", 699, 2, "book2"]
+  ];
+  var STATUSES = ["Pending", "Shipped", "Delivered", "Cancelled"];
+  var products = SEED.map(function (p, i) { return { id: i + 1, name: p[0], category: p[1], price: p[2], stock: p[3], kind: p[4], photo: "" }; });
+  var nextPid = products.length + 1, nextOid = 1001, orders = [], cart = [];
+
+  (function seedOrders() {
+    var r = rng(77), names = ["Arun K", "Divya S", "Karthik R", "Meena P", "Suresh V", "Priya M", "Rahul N", "Anitha T"];
+    for (var i = 0; i < 40; i++) {
+      var lines = [], n = 1 + Math.floor(r() * 3);
+      for (var j = 0; j < n; j++) {
+        var p = products[Math.floor(r() * products.length)];
+        if (!lines.some(function (l) { return l.id === p.id; })) lines.push({ id: p.id, name: p.name, category: p.category, price: p.price, qty: 1 + Math.floor(r() * 2) });
+      }
+      var sub = lines.reduce(function (s, l) { return s + l.price * l.qty; }, 0), roll = r();
+      orders.push({
+        id: nextOid++, at: new Date(Date.now() - Math.floor(r() * 14) * 86400000 - Math.floor(r() * 80000000) % 86400000),
+        name: names[Math.floor(r() * names.length)], items: lines, total: sub + (sub >= 999 ? 0 : 49),
+        status: roll < 0.6 ? "Delivered" : roll < 0.8 ? "Shipped" : roll < 0.93 ? "Pending" : "Cancelled"
+      });
+    }
+    orders.sort(function (a, b) { return b.at - a.at; });
+  })();
+
+  function find(id) { return products.filter(function (p) { return p.id === id; })[0]; }
+
+  /* ---------- Store ---------- */
+  function renderShop() {
+    var q = $("search").value.toLowerCase(), c = $("category").value, s = $("sort").value;
+    var list = products.filter(function (p) {
+      return (!q || p.name.toLowerCase().indexOf(q) > -1) && (c === "All" || p.category === c);
+    });
+    if (s === "asc") list.sort(function (a, b) { return a.price - b.price; });
+    if (s === "desc") list.sort(function (a, b) { return b.price - a.price; });
+    $("products").innerHTML = list.map(function (p) {
+      var st = p.stock === 0 ? '<span class="stk out">Out of stock</span>' :
+        p.stock <= 5 ? '<span class="stk low">Hurry! Only ' + p.stock + " left</span>" : '<span class="stk">In stock</span>';
+      return '<div class="pcard"><div class="imgbox">' + picture(p) + '<span class="badge b-' + esc(p.category) + '">' + esc(p.category) + "</span></div>" +
+        '<div class="pbody"><div class="pname">' + esc(p.name) + "</div>" + st +
+        '<div class="price">' + money(p.price) + '</div><button class="btn orange" data-add="' + p.id + '"' + (p.stock === 0 ? " disabled" : "") + ">Add to cart</button></div></div>";
+    }).join("") || '<p class="note">No products match your search.</p>';
+  }
+
+  function renderCart() {
+    var sub = 0;
+    $("cartLines").innerHTML = cart.map(function (l) {
+      var p = find(l.id); if (!p) return "";
+      sub += p.price * l.qty;
+      return '<div class="line"><span>' + esc(p.name) + "<br><small>" + money(p.price) + "</small></span><span>" +
+        '<button class="btn ghost sm" data-dec="' + l.id + '" aria-label="Remove one">-</button> <strong>' + l.qty +
+        '</strong> <button class="btn ghost sm" data-inc="' + l.id + '" aria-label="Add one">+</button></span></div>';
+    }).join("") || '<p class="note">Your cart is empty. Add a product to start.</p>';
+    var ship = sub === 0 ? 0 : sub >= 999 ? 0 : 49;
+    $("totals").innerHTML = sub
+      ? '<div class="line"><span>Subtotal</span><span>' + money(sub) + '</span></div><div class="line"><span>Shipping</span><span>' + (ship ? money(ship) : "Free") + '</span></div><div class="line"><strong>Total</strong><strong>' + money(sub + ship) + "</strong></div>"
+      : "";
+    $("placeBtn").disabled = !sub;
+  }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target, id, l, p;
+    if (t.dataset.add) {
+      id = +t.dataset.add; p = find(id);
+      l = cart.filter(function (x) { return x.id === id; })[0];
+      if (l) { if (l.qty < p.stock && l.qty < 10) l.qty++; } else cart.push({ id: id, qty: 1 });
+      renderCart();
+    }
+    if (t.dataset.inc) {
+      id = +t.dataset.inc; p = find(id);
+      l = cart.filter(function (x) { return x.id === id; })[0];
+      if (l.qty < p.stock && l.qty < 10) l.qty++;
+      renderCart();
+    }
+    if (t.dataset.dec) {
+      id = +t.dataset.dec;
+      l = cart.filter(function (x) { return x.id === id; })[0];
+      l.qty--; if (l.qty <= 0) cart = cart.filter(function (x) { return x !== l; });
+      renderCart();
+    }
+    if (t.dataset.del) {
+      if (t.dataset.armed) {
+        id = +t.dataset.del;
+        products = products.filter(function (x) { return x.id !== id; });
+        cart = cart.filter(function (x) { return x.id !== id; });
+        renderAll();
+      } else { t.dataset.armed = "1"; t.textContent = "Confirm?"; }
+    }
+  });
+  ["search", "category", "sort"].forEach(function (i) { $(i).addEventListener("input", renderShop); });
+
+  $("checkout").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = $("cname").value.trim(), email = $("cemail").value.trim(), addr = $("caddr").value.trim(), m = $("msg");
+    function err(t) { m.innerHTML = '<div class="msg err">' + esc(t) + "</div>"; }
+    if (!name) return err("Enter your name.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err("Enter a valid email address.");
+    if (!addr) return err("Enter a delivery address.");
+    for (var i = 0; i < cart.length; i++) {
+      var p = find(cart[i].id);
+      if (!p || p.stock < cart[i].qty) return err("Not enough stock for " + (p ? p.name : "an item") + ".");
+    }
+    var lines = cart.map(function (l) {
+      var q = find(l.id); q.stock -= l.qty;
+      return { id: q.id, name: q.name, category: q.category, price: q.price, qty: l.qty };
+    });
+    var sub = lines.reduce(function (s, l) { return s + l.price * l.qty; }, 0), total = sub + (sub >= 999 ? 0 : 49);
+    var o = { id: nextOid++, at: new Date(), name: name, items: lines, total: total, status: "Pending" };
+    orders.unshift(o); cart = []; $("checkout").reset();
+    m.innerHTML = '<div class="msg ok">Order #' + o.id + " placed for " + money(total) + ". Open the Admin dashboard to see it.</div>";
+    renderAll();
+  });
+
+  /* ---------- Charts (hand-drawn SVG, no library) ---------- */
+  function niceMax(v) {
+    var e = Math.pow(10, Math.floor(Math.log(v) / Math.LN10)), n = v / e;
+    return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * e;
+  }
+  function fmtK(v) { return v >= 1000 ? "₹" + (Math.round(v / 100) / 10) + "k" : "₹" + v; }
+  function trunc(s, n) { return s.length > n ? s.slice(0, n - 1) + "…" : s; }
+
+  function lineChart(vals, labels) {
+    var W = 480, H = 220, pl = 48, pr = 14, pt = 12, pb = 26, iw = W - pl - pr, ih = H - pt - pb;
+    var max = niceMax(Math.max.apply(null, vals) || 1), s = "", i;
+    for (i = 0; i <= 4; i++) {
+      var y = pt + ih - ih * i / 4;
+      s += '<line class="gl" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y + '" y2="' + y + '"/><text class="tx" x="' + (pl - 6) + '" y="' + (y + 4) + '" text-anchor="end">' + fmtK(max * i / 4) + "</text>";
+    }
+    var pts = vals.map(function (v, k) { return [pl + iw * k / (vals.length - 1), pt + ih - ih * v / max]; });
+    var line = pts.map(function (p, k) { return (k ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); }).join("");
+    var last = pts[pts.length - 1];
+    s += '<path class="ar" d="' + line + "L" + last[0].toFixed(1) + " " + (pt + ih) + "L" + pts[0][0].toFixed(1) + " " + (pt + ih) + 'Z"/>';
+    s += '<path class="ln" d="' + line + '"/><circle class="dot" cx="' + last[0].toFixed(1) + '" cy="' + last[1].toFixed(1) + '" r="5"/>';
+    labels.forEach(function (lb, k) {
+      if (k % 3 === 0) s += '<text class="tx" x="' + pts[k][0].toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle">' + esc(lb) + "</text>";
+    });
+    return '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Revenue over the last 14 days">' + s + "</svg>";
+  }
+
+  function barChart(names, vals) {
+    if (!names.length) return '<p class="note">No sales yet.</p>';
+    var W = 480, rowH = 34, lw = 140, H = names.length * rowH + 6, max = Math.max.apply(null, vals) || 1, s = "";
+    names.forEach(function (n, i) {
+      var y = i * rowH + 6, w = Math.max(2, (W - lw - 44) * vals[i] / max);
+      s += '<text class="tx" x="0" y="' + (y + 16) + '">' + esc(trunc(n, 20)) + '</text><rect class="br" x="' + lw + '" y="' + y + '" width="' + w.toFixed(1) + '" height="22" rx="6"/><text class="tx" x="' + (lw + w + 6).toFixed(1) + '" y="' + (y + 16) + '">' + vals[i] + "</text>";
+    });
+    return '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="Top products by units sold">' + s + "</svg>";
+  }
+
+  function donut(names, vals) {
+    var tot = vals.reduce(function (a, b) { return a + b; }, 0);
+    if (!tot) return '<p class="note">No sales yet.</p>';
+    var R = 56, C = 2 * Math.PI * R, off = 0, s = "", leg = "";
+    names.forEach(function (n, i) {
+      var len = C * vals[i] / tot, col = CATCOL[n] || "#8b5cf6";
+      s += '<circle cx="80" cy="80" r="' + R + '" fill="none" stroke="' + col + '" stroke-width="26" stroke-dasharray="' + len.toFixed(2) + " " + (C - len).toFixed(2) + '" stroke-dashoffset="' + (-off).toFixed(2) + '" transform="rotate(-90 80 80)"/>';
+      off += len;
+      leg += '<span><i style="background:' + col + '"></i>' + esc(n) + " " + Math.round(vals[i] / tot * 100) + "%</span>";
+    });
+    s += '<text class="tx" x="80" y="78" text-anchor="middle">Revenue</text><text x="80" y="95" text-anchor="middle" style="fill:#1b2559;font-size:14px;font-weight:700">' + fmtK(tot) + "</text>";
+    return '<svg viewBox="0 0 160 160" role="img" aria-label="Sales by category" style="max-width:220px;margin:0 auto">' + s + '</svg><div class="legend">' + leg + "</div>";
+  }
+
+  /* ---------- Admin ---------- */
+  function dk(d) { return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate(); }
+
+  function renderAdmin() {
+    var valid = orders.filter(function (o) { return o.status !== "Cancelled"; });
+    var revenue = valid.reduce(function (s, o) { return s + o.total; }, 0);
+    var pending = orders.filter(function (o) { return o.status === "Pending"; }).length;
+    var low = products.filter(function (p) { return p.stock <= 5; }).sort(function (a, b) { return a.stock - b.stock; });
+    var kp = [["Revenue", money(revenue)], ["Orders", orders.length], ["Avg. order value", money(valid.length ? Math.round(revenue / valid.length) : 0)], ["Pending orders", pending], ["Low stock items", low.length]];
+    $("kpis").innerHTML = kp.map(function (k, i) { return '<div class="kpi k' + (i + 1) + '"><div class="l">' + k[0] + '</div><div class="v">' + k[1] + "</div></div>"; }).join("");
+
+    var days = [], i;
+    for (i = 13; i >= 0; i--) {
+      var d = new Date(Date.now() - i * 86400000);
+      days.push({ k: dk(d), label: d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }), v: 0 });
+    }
+    var cat = {}, prod = {};
+    valid.forEach(function (o) {
+      var day = days.filter(function (x) { return x.k === dk(o.at); })[0];
+      if (day) day.v += o.total;
+      o.items.forEach(function (l) {
+        cat[l.category] = (cat[l.category] || 0) + l.price * l.qty;
+        prod[l.name] = (prod[l.name] || 0) + l.qty;
+      });
+    });
+    var cats = Object.keys(cat).sort(function (a, b) { return cat[b] - cat[a]; });
+    var tops = Object.keys(prod).sort(function (a, b) { return prod[b] - prod[a]; }).slice(0, 5);
+
+    $("revChart").innerHTML = lineChart(days.map(function (x) { return x.v; }), days.map(function (x) { return x.label; }));
+    $("catChart").innerHTML = donut(cats, cats.map(function (c) { return cat[c]; }));
+    $("topChart").innerHTML = barChart(tops, tops.map(function (t) { return prod[t]; }));
+    $("low").innerHTML = low.length ? low.map(function (p) { return '<span class="pill">' + esc(p.name) + ": " + p.stock + " left</span>"; }).join("") : '<p class="note">All products have enough stock.</p>';
+
+    $("orders").innerHTML = orders.slice(0, 30).map(function (o) {
+      return "<tr><td>" + o.id + "</td><td>" + o.at.toLocaleDateString("en-IN", { day: "2-digit", month: "short" }) + "</td><td>" + esc(o.name) + "</td><td>" +
+        o.items.map(function (l) { return esc(l.name) + " x" + l.qty; }).join(", ") + "</td><td>" + money(o.total) +
+        '</td><td><select data-order="' + o.id + '" aria-label="Status of order ' + o.id + '">' +
+        STATUSES.map(function (s) { return "<option" + (s === o.status ? " selected" : "") + ">" + s + "</option>"; }).join("") + "</select></td></tr>";
+    }).join("");
+
+    $("inv").innerHTML = products.map(function (p) {
+      return "<tr><td>" + p.id + "</td><td>" + esc(p.name) + "</td><td>" + esc(p.category) + "</td><td>" + money(p.price) +
+        '</td><td><input type="number" min="0" value="' + p.stock + '" data-stock="' + p.id + '" style="width:80px" aria-label="Stock of ' + esc(p.name) +
+        '"></td><td><button class="btn danger sm" data-del="' + p.id + '">Delete</button></td></tr>';
+    }).join("");
+  }
+
+  document.addEventListener("change", function (e) {
+    var t = e.target;
+    if (t.dataset.order) {
+      var o = orders.filter(function (x) { return x.id === +t.dataset.order; })[0], ns = t.value;
+      if (ns === "Cancelled" && o.status !== "Cancelled") o.items.forEach(function (l) { var p = find(l.id); if (p) p.stock += l.qty; });
+      if (o.status === "Cancelled" && ns !== "Cancelled") o.items.forEach(function (l) { var p = find(l.id); if (p) p.stock = Math.max(0, p.stock - l.qty); });
+      o.status = ns; renderAll();
+    }
+    if (t.dataset.stock) {
+      var pr = find(+t.dataset.stock), v = parseInt(t.value, 10);
+      if (pr && v >= 0) { pr.stock = v; renderAll(); }
+    }
+  });
+
+  $("addForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var n = $("pn").value.trim(), c = $("pc").value.trim(), pr = Number($("pp").value), st = Number($("ps").value), img = $("pi").value.trim(), m = $("pmsg");
+    if (!n || !c || !(pr > 0) || !Number.isInteger(st) || st < 0) {
+      m.innerHTML = '<div class="msg err">Fill in a name, category, a price above 0 and a whole-number stock.</div>'; return;
+    }
+    products.push({ id: nextPid++, name: n, category: c, price: pr, stock: st, kind: "box", photo: img });
+    $("addForm").reset(); m.innerHTML = '<div class="msg ok">Product added. It is now in the store.</div>'; renderAll();
+  });
+
+  /* ---------- Tabs ---------- */
+  function renderAll() { renderShop(); renderCart(); if (!$("adminView").hidden) renderAdmin(); }
+  function show(tab) {
+    var admin = tab === "admin";
+    $("shopView").hidden = admin; $("adminView").hidden = !admin;
+    $("tabShop").setAttribute("aria-selected", String(!admin));
+    $("tabAdmin").setAttribute("aria-selected", String(admin));
+    if (admin) renderAdmin(); else renderShop();
+  }
+  $("tabShop").onclick = function () { show("shop"); };
+  $("tabAdmin").onclick = function () { show("admin"); };
+
+  renderShop();
+  renderCart();
+})();
+</script>
+</body>
+</html>
